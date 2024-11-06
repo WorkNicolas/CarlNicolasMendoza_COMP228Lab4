@@ -73,8 +73,13 @@ public class FormApplication extends Application {
 
         // displayListView
         ListView<String> displayListView = new ListView<>();
+        displayListView.setMinWidth(1000);
+        displayListView.setMinHeight(500);
         ObservableList<String> observableDisplayListView = FXCollections.observableArrayList();
         displayListView.setItems(observableDisplayListView);
+        ScrollPane displayScrollPane = new ScrollPane();
+        displayScrollPane.setContent(displayListView);
+        displayScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
 
         // leftGridPane Positioning
         leftGridPane.add(nameLabel, 0, 0);
@@ -114,7 +119,7 @@ public class FormApplication extends Application {
 
         // vBox Positioning
         vbox.getChildren().add(displayButton);
-        vbox.getChildren().add(displayListView);
+        vbox.getChildren().add(displayScrollPane);
         vbox.setAlignment(Pos.CENTER);
 
         // borderPane
@@ -123,7 +128,7 @@ public class FormApplication extends Application {
         // borderPane Positioning
         borderPane.setTop(flowPane);
         borderPane.setBottom(vbox);
-        borderPane.setAlignment(vbox, Pos.CENTER);
+        BorderPane.setAlignment(vbox, Pos.CENTER);
 
         // ActionEvents
         skillsComboBox.setOnAction(e -> {
@@ -171,7 +176,7 @@ public class FormApplication extends Application {
             observableDisplayListView.clear();
 
             // Final Display
-            if (!name.equals("") || !address.equals("") || !city.equals("") || !province.equals("") || !city.equals("") || !postalCode.equals("") || !phoneNumber.equals("") || !email.equals("")) {
+            if (!name.isEmpty() || !address.isEmpty() || !city.isEmpty() || !province.isEmpty() || !postalCode.isEmpty() || !phoneNumber.isEmpty() || !email.isEmpty()) {
                 observableDisplayListView.add(profile);
                 observableDisplayListView.add("Courses:");
                 observableDisplayListView.addAll(skillList);
@@ -198,7 +203,11 @@ public class FormApplication extends Application {
         });
 
         // Scene
-        Scene scene = new Scene(borderPane, 800, 600);
+        int w = 800;
+        int h = 400;
+        Scene scene = new Scene(borderPane, w, h);
+        stage.setMinWidth(w);
+        stage.setMinHeight(h);
         stage.setScene(scene);
         stage.setTitle("Course Form");
         stage.show();
